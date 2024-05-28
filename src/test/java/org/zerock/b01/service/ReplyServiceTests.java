@@ -20,7 +20,7 @@ public class ReplyServiceTests {
         ReplyDTO replyDTO = ReplyDTO.builder()
                 .replyText("리플 테스트")
                 .replyer("테스터1")
-                .bno(67L)
+                .bno(309L)
                 .build();
 
         log.info(replyService.register(replyDTO));

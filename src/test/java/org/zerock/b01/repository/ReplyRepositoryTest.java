@@ -11,6 +11,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import org.zerock.b01.domain.Board;
 import org.zerock.b01.domain.Reply;
+import org.zerock.b01.dto.ReplyDTO;
+import org.zerock.b01.service.ReplyServiceImpl;
+
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 
 @SpringBootTest
@@ -18,10 +23,12 @@ import org.zerock.b01.domain.Reply;
 class ReplyRepositoryTest {
     @Autowired
     private ReplyRepository replyRepository;
+    @Autowired
+    private ReplyServiceImpl replyServiceImpl;
 
     @Test
     public void testSave() {
-        Long bno=67L;
+        Long bno=300L;
         Board board=Board.builder().bno(bno).build();
 
         Reply reply = Reply.builder().board(board).replyText("이거 댓글임3").build();
@@ -29,9 +36,22 @@ class ReplyRepositoryTest {
     }
 
     @Test
+    public void lotsOfReplies() {
+        LongStream.rangeClosed(1L,100L).forEach(i->{
+            ReplyDTO replyDTO = ReplyDTO.builder()
+                    .bno(300L)
+                    .replyText("replyreply....."+i)
+                    .replyer("replyer"+i%10)
+                    .build();
+            Long rno = replyServiceImpl.register(replyDTO);
+            log.info(rno);
+        });
+    }
+
+    @Test
     @Transactional//reply 테이블 검색에서 보드 테이블 까지 검색 할때 사용
     public void testFindByBno() {
-        Long bno=67L;
+        Long bno=300L;
         PageRequest pageRequest = PageRequest.of(0, 10, Sort.by("rno").descending());
         Page<Reply> replies = replyRepository.listOfBoard(bno, pageRequest);
         replies.getContent().forEach(System.out::println);
