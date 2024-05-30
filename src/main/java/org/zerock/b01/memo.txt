@@ -1,0 +1,11 @@
+1. 게시판 - 회원가입 mvc
+
+client <-> signup(view) <-> UserController <-(userDTO)-> userServiceImpl <-(userDTO->UserEntity)-> DB
+
+userServiceImpl -> DB 구간 확대!
+
+userDTO <-(modelMapper 및 userRepository)-> UserEntity
+
+2. JPA , lombok 어노테이션 정리
+
+3. thymeleaf 문법 정리
