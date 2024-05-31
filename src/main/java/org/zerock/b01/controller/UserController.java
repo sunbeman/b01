@@ -92,4 +92,10 @@ public class UserController {
          */
     }
 
+    @PostMapping("/signout")
+    public String signout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/user/signin";
+    }
+
 }

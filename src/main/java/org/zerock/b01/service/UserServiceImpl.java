@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
         또한 UserController 의 logInPost 메소드에서도 예외처리 필요없음.
 
          */
-
         return false; // 로그인 실패
     }
+
 }

@@ -20,10 +20,12 @@
                         </select>
                     </div>
                     <input type="text" class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}">
+
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary searchBtn" type="submit">Search</button>
                         <button class="btn btn-outline-secondary clearBtn" type="button">Clear</button>
                     </div>
+
                 </div>
             </div>
         </form>
@@ -36,7 +38,7 @@
                     Board List
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Board List</h5>
+
                     <table class="table">
                         <thead>
                         <tr>
@@ -104,6 +106,7 @@
 </div>
 
 <script layout:fragment="script" th:inline="javascript">
+
     document.querySelector(".pagination").addEventListener("click", function (e){
         e.preventDefault()
         e.stopPropagation()
@@ -120,6 +123,7 @@
         e.stopPropagation()
         self.location='/board/list'
     },false)
+
 
     // show modal
     const result = [[${result}]]
