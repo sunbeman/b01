@@ -55,8 +55,11 @@ dependencies {
             "jakarta.persistence:jakarta.persistence-api",
             "jakarta.annotation:jakarta.annotation-api",
             "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta"
-
     )
+
+    // Spring Session Data Redis
+    implementation 'org.springframework.session:spring-session-data-redis'
+
 }
 
 tasks.named('test') {

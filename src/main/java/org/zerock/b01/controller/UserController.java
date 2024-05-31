@@ -1,5 +1,6 @@
 package org.zerock.b01.controller;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -63,13 +64,14 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public String logInPOST(@Valid UserDTO userDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String logInPOST(@Valid UserDTO userDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             return "redirect:/user/signin";
         }
 
         if (userService.signIn(userDTO)) {
+            session.setAttribute("username", userDTO.getId());
             return "redirect:/board/list";// 로그인 성공 시 홈 페이지로 이동
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "Invalid ID or Password");

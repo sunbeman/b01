@@ -1,5 +1,6 @@
 package org.zerock.b01.controller;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -10,11 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.zerock.b01.dto.BoardDTO;
-import org.zerock.b01.dto.BoardListReplyCountDTO;
-import org.zerock.b01.dto.PageRequestDTO;
-import org.zerock.b01.dto.PageResponseDTO;
+import org.zerock.b01.dto.*;
 import org.zerock.b01.service.BoardService;
+import org.zerock.b01.service.UserService;
 
 @Controller
 @RequestMapping("/board")
@@ -34,23 +33,28 @@ public class BoardController {
     */
 
     @GetMapping("/list")
-    public void list(PageRequestDTO pageRequestDTO, Model model) {
+    public void list(PageRequestDTO pageRequestDTO, UserDTO userDTO, Model model) {
         //PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
         PageResponseDTO<BoardListReplyCountDTO> responseDTO=
                 boardService.listWithReplyCount(pageRequestDTO);
         log.info(responseDTO);
         model.addAttribute("responseDTO", responseDTO);
+        model.addAttribute("username", userDTO.getId());
+        // 로그인 후 리스트 화면에서 "'id'님 환영합니다." 상단 텍스트메시지 (아직 구현안함)
     }
 
     @GetMapping("/register")
-    public void registerGET() {//html 호출을 위해 기본 get 사용
+    public String registerGET(HttpSession session, Model model) {//html 호출을 위해 기본 get 사용
+        String writer = (String) session.getAttribute("username");
+        model.addAttribute("writer", writer);
+        return "board/register";
     }
 
     @PostMapping("/register")//@Valid BoardDTO 데이터 바인딩
-    public String registerPOST(@Valid BoardDTO boardDTO,
-                             BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        //BindingResult는 오류가 나면 어떤 오류 인지 담기
-        //RedirectAttributes 리다이랙트에 값을 담아서 보네기
+    public String registerPOST(@Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes
+    , HttpSession session) {
+        // BindingResult는 오류가 나면 어떤 오류 인지 담기
+        // RedirectAttributes 리다이랙트에 값을 담아서 보네기
         if (bindingResult.hasErrors()) {
             //에러가 있으면
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
@@ -58,8 +62,14 @@ public class BoardController {
             return "redirect:/board/register";
         }
 
+        // 로그인 후 작성시 writer = username(id)
+        String writer = (String) session.getAttribute("username");
+        boardDTO.setWriter(writer);
+
+
         Long bno = boardService.register(boardDTO);
         redirectAttributes.addFlashAttribute("result", bno);
+
         // 연결 성공시 정보전달
         return "redirect:/board/list";
     }
