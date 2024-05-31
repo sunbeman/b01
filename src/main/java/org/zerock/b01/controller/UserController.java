@@ -92,7 +92,7 @@ public class UserController {
          */
     }
 
-    @PostMapping("/signout")
+    @GetMapping("/signout")
     public String signout(HttpSession session) {
         session.invalidate();
         return "redirect:/user/signin";

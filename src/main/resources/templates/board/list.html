@@ -66,6 +66,7 @@
                             </tr>
                         </tbody>
                     </table>
+
                     <div class="float-end">
                         <ul class="pagination flex-wrap">
                             <li class="page-item" th:if="${responseDTO.prev}">
@@ -81,6 +82,12 @@
                             </li>
                         </ul>
                     </div>
+
+                    <div>
+                        <a th:if="${session.username != null}" th:href="@{/board/register}" type="button" class="btn btn-primary me-1">Register</a>
+<!--                        <a th:unless="${session.username != null}" th:href="@{/user/signin}" type="button" class="btn btn-primary me-1">Sign In</a>-->
+                    </div>
+
                 </div>
             </div>
         </div>

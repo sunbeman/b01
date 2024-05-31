@@ -22,7 +22,6 @@ import org.zerock.b01.service.UserService;
 public class BoardController {
 
     private final BoardService boardService;
-
     /*
     @GetMapping("/list")
     public void list(PageRequestDTO pageRequestDTO, Model model) {
@@ -31,7 +30,6 @@ public class BoardController {
         model.addAttribute("responseDTO", responseDTO);
     }
     */
-
     @GetMapping("/list")
     public void list(PageRequestDTO pageRequestDTO, UserDTO userDTO, Model model) {
         //PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
@@ -40,7 +38,7 @@ public class BoardController {
         log.info(responseDTO);
         model.addAttribute("responseDTO", responseDTO);
         model.addAttribute("username", userDTO.getId());
-        // 로그인 후 리스트 화면에서 "'id'님 환영합니다." 상단 텍스트메시지 (아직 구현안함)
+        // 로그인 후 리스트 화면에서 "'id'님 환영합니다." 상단 텍스트메시지
     }
 
     @GetMapping("/register")
