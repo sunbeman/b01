@@ -35,9 +35,9 @@
 
                 <div class="d-flex ms-auto">
 
-                    <h5>반갑다 '[[${session.username}]]' </h5>
-                    <a th:if="${session.username != null}" th:href="@{/user/signout}" type="button" class="btn btn-danger me-1">Sign Out</a>
-                    <a th:unless="${session.username != null}" th:href="@{/user/signin}" type="button" class="btn btn-primary me-1">Sign In</a>
+                    <h5>반갑다 '[[${session.nickname}]]' </h5>
+                    <a th:if="${session.userid != null}" th:href="@{/user/signout}" type="button" class="btn btn-danger me-1">Sign Out</a>
+                    <a th:unless="${session.userid != null}" th:href="@{/user/signin}" type="button" class="btn btn-primary me-1">Sign In</a>
                 </div>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>

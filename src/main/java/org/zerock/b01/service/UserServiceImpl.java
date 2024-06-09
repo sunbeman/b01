@@ -25,9 +25,14 @@ public class UserServiceImpl implements UserService {
     public void signUp(UserDTO userDTO) {
 
         // ID 중복 체크
-         if (userRepository.existsById(userDTO.getId())) {
+        if (userRepository.existsById(userDTO.getId())) {
             throw new IllegalArgumentException("ID already exists.");
         }
+        // Nickname 중복 체크
+        if (userRepository.existsByNickname(userDTO.getNickname())) {
+            throw new IllegalArgumentException("Nickname already exists.");
+        }
+
         // IllegalArgumentException : 잘못된 argument가 메서드에 전달될 때 발생하는 예외 (UserServiceImpl -> UserDTO)
         User user = modelMapper.map(userDTO, User.class);
         userRepository.save(user);
@@ -48,5 +53,15 @@ public class UserServiceImpl implements UserService {
          */
         return false; // 로그인 실패
     }
+
+    @Override
+    public UserDTO getUserById(String userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user != null) {
+            return modelMapper.map(user, UserDTO.class);
+        }
+        return null;
+    }
+
 
 }

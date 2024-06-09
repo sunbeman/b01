@@ -7,4 +7,5 @@ public interface UserService {
 
     void signUp(UserDTO userDTO);
     boolean signIn(UserDTO userDTO);
+    UserDTO getUserById(String userId);
 }

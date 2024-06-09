@@ -71,7 +71,12 @@ public class UserController {
         }
 
         if (userService.signIn(userDTO)) {
-            session.setAttribute("username", userDTO.getId());
+            UserDTO logInUser = userService.getUserById(userDTO.getId());
+            session.setAttribute("nickname", logInUser.getNickname());
+            // 로그인 시에는 세션에 nickname값이 없다! db에서 찾아와야됨!
+
+            session.setAttribute("userid", userDTO.getId());
+
             return "redirect:/board/list";// 로그인 성공 시 홈 페이지로 이동
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "Invalid ID or Password");

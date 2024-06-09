@@ -37,13 +37,14 @@ public class BoardController {
                 boardService.listWithReplyCount(pageRequestDTO);
         log.info(responseDTO);
         model.addAttribute("responseDTO", responseDTO);
-        model.addAttribute("username", userDTO.getId());
-        // 로그인 후 리스트 화면에서 "'id'님 환영합니다." 상단 텍스트메시지
+//        model.addAttribute("nickname", userDTO.getNickname());
+//        model.addAttribute("userid", userDTO.getId());
+        // 로그인 후 리스트 화면에서 "'nickname'님 환영합니다." 상단 텍스트메시지 (인줄 알았는데 필요없음)
     }
 
     @GetMapping("/register")
     public String registerGET(HttpSession session, Model model) {//html 호출을 위해 기본 get 사용
-        String writer = (String) session.getAttribute("username");
+        String writer = (String) session.getAttribute("nickname");
         model.addAttribute("writer", writer);
         return "board/register";
     }
@@ -60,8 +61,8 @@ public class BoardController {
             return "redirect:/board/register";
         }
 
-        // 로그인 후 작성시 writer = username(id)
-        String writer = (String) session.getAttribute("username");
+        // 로그인 후 작성시 writer = nickname
+        String writer = (String) session.getAttribute("nickname");
         boardDTO.setWriter(writer);
 
 
