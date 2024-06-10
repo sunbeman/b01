@@ -21,5 +21,4 @@ public class User {
 
     @Column(length = 100, nullable = false, unique = true)
     private String nickname;
-
 }
