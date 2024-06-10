@@ -13,10 +13,7 @@ import lombok.*;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long uno;
-
-    @Column(length = 100, nullable = false, unique = true)
+    @Column(length = 100, nullable = false)
     private String id;
 
     @Column(length = 100, nullable = false)
@@ -24,4 +21,5 @@ public class User {
 
     @Column(length = 100, nullable = false, unique = true)
     private String nickname;
+
 }

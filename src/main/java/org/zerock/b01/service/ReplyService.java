@@ -12,6 +12,4 @@ public interface ReplyService {
     void remove(Long bno);
 
     PageResponseDTO<ReplyDTO> getListOfBoard(Long bno, PageRequestDTO pageRequestDTO);
-
-
 }
