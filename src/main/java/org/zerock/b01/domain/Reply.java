@@ -3,10 +3,7 @@ package org.zerock.b01.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 @Entity
-@Table(indexes = {@Index(name ="idx_reply_board_bno",columnList = "board_bno")})//{}인덱스 여러게 지정
-                        //인덱스 이름,인덱스 리스트
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,7 +28,6 @@ public class Reply extends BaseEntity {
     public void changeText(String text) {
 
         this.replyText = text;
-
 
     }
 

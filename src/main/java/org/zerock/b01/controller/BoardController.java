@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.b01.dto.*;
 import org.zerock.b01.service.BoardService;
@@ -65,7 +66,6 @@ public class BoardController {
         String writer = (String) session.getAttribute("nickname");
         boardDTO.setWriter(writer);
 
-
         Long bno = boardService.register(boardDTO);
         redirectAttributes.addFlashAttribute("result", bno);
 
@@ -74,10 +74,13 @@ public class BoardController {
     }
 
     @GetMapping({"/read","/modify"})
-    public void read(Long bno,
+    public void read(Long bno, HttpSession session,
                      PageRequestDTO pageRequestDTO,
                      Model model){
         BoardDTO boardDTO = boardService.readOne(bno);
+        String replyer = (String) session.getAttribute("nickname");
+
+        model.addAttribute("replyer", replyer);
         model.addAttribute("dto", boardDTO);
     }
 

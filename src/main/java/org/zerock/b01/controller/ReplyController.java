@@ -1,17 +1,21 @@
 package org.zerock.b01.controller;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.zerock.b01.dto.PageRequestDTO;
 import org.zerock.b01.dto.PageResponseDTO;
 import org.zerock.b01.dto.ReplyDTO;
+import org.zerock.b01.dto.UserDTO;
 import org.zerock.b01.service.ReplyService;
+import org.zerock.b01.service.UserService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,10 +36,8 @@ public class ReplyController {
         if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
         }
-
         Map<String, Long> resultMap = new HashMap<>();
         Long rno = replyService.register(replyDTO);
-
         resultMap.put("rno", rno);
 
         return resultMap;
@@ -45,7 +47,6 @@ public class ReplyController {
     public PageResponseDTO<ReplyDTO> getList(@PathVariable("bno") Long bno, PageRequestDTO pageRequestDTO) {
         PageResponseDTO<ReplyDTO> responseDTO = replyService.getListOfBoard(bno, pageRequestDTO);
         return responseDTO;
-
     }
 
     @GetMapping(value="/{rno}")

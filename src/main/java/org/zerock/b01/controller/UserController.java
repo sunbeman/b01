@@ -100,7 +100,7 @@ public class UserController {
     @GetMapping("/signout")
     public String signout(HttpSession session) {
         session.invalidate();
-        return "redirect:/user/signin";
+        return "redirect:/board/list";
     }
 
 }
